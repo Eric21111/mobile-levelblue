@@ -3,7 +3,7 @@
     "name": "mobile-level",
     "slug": "mobile-level",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/images/icon.png",
     "scheme": "mobilelevel",
     "userInterfaceStyle": "automatic",
