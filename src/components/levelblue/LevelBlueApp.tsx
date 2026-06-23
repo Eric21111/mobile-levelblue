@@ -5,12 +5,15 @@ import { BestiaryScreen } from './BestiaryScreen';
 import { DashboardScreen } from './DashboardScreen';
 import { DEMO_STUDENT, rankTitleFor } from './data';
 import { GameScreen } from './GameScreen';
+import { IntroScreen } from './IntroScreen';
 import { LoginScreen } from './LoginScreen';
 import { ResultsScreen } from './ResultsScreen';
-import { MatchResult, Screen, Student } from './types';
+import { MatchResult, Student } from './types';
+
+type Screen = 'intro' | 'login' | 'dashboard' | 'game' | 'bestiary' | 'results'; 
 
 export function LevelBlueApp() {
-  const [screen, setScreen] = useState<Screen>('login');
+  const [screen, setScreen] = useState<Screen>('intro');  // ← starts on intro
   const [student, setStudent] = useState<Student>(DEMO_STUDENT);
   const [lastResult, setLastResult] = useState<MatchResult | null>(null);
 
@@ -34,6 +37,10 @@ export function LevelBlueApp() {
     setLastResult(null);
     setStudent(DEMO_STUDENT);
     setScreen('login');
+  }
+
+  if (screen === 'intro') {
+    return <IntroScreen onStart={() => setScreen('login')} />;
   }
 
   if (screen === 'game') {
