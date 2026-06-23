@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { BlackHanSans_400Regular, useFonts } from '@expo-google-fonts/black-han-sans';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect, useState } from 'react'; // merged duplicate
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 
 import { BestiaryScreen } from './BestiaryScreen';
@@ -10,12 +12,22 @@ import { LoginScreen } from './LoginScreen';
 import { ResultsScreen } from './ResultsScreen';
 import { MatchResult, Student } from './types';
 
-type Screen = 'intro' | 'login' | 'dashboard' | 'game' | 'bestiary' | 'results'; 
+SplashScreen.preventAutoHideAsync();
+
+type Screen = 'intro' | 'login' | 'dashboard' | 'game' | 'bestiary' | 'results';
 
 export function LevelBlueApp() {
-  const [screen, setScreen] = useState<Screen>('intro');  // ← starts on intro
+  const [screen, setScreen] = useState<Screen>('intro');
   const [student, setStudent] = useState<Student>(DEMO_STUDENT);
   const [lastResult, setLastResult] = useState<MatchResult | null>(null);
+
+  const [fontsLoaded, fontError] = useFonts({ BlackHanSans_400Regular });
+
+  useEffect(() => {
+    if (fontsLoaded || fontError) SplashScreen.hideAsync();
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) return null;
 
   function finishMatch(result: MatchResult) {
     setLastResult(result);
