@@ -9,12 +9,14 @@ import { DEMO_STUDENT, rankTitleFor } from './data';
 import { GameScreen } from './GameScreen';
 import { IntroScreen } from './IntroScreen';
 import { LoginScreen } from './LoginScreen';
+import Progress from './Progress';
 import { ResultsScreen } from './ResultsScreen';
+import SettingsScreen from './SettingScreen';
 import { MatchResult, Student } from './types';
 
 SplashScreen.preventAutoHideAsync();
 
-type Screen = 'intro' | 'login' | 'dashboard' | 'game' | 'bestiary' | 'results';
+type Screen = 'intro' | 'login' | 'dashboard' | 'game' | 'bestiary' | 'results' | 'progress' | 'settings';
 
 export function LevelBlueApp() {
   const [screen, setScreen] = useState<Screen>('intro');
@@ -75,16 +77,21 @@ export function LevelBlueApp() {
             <DashboardScreen
               lastResult={lastResult}
               onBestiary={() => setScreen('bestiary')}
+              onProgress={() => setScreen('progress')}
+              onSettings={() => setScreen('settings')}
               onLogout={logout}
               onPlay={() => setScreen('game')}
               student={student}
             />
           ) : null}
           {screen === 'bestiary' ? <BestiaryScreen onBack={() => setScreen('dashboard')} /> : null}
+          {screen === 'progress' ? <Progress onBack={() => setScreen('dashboard')} /> : null} 
+          {screen === 'settings' ? <SettingsScreen onBack={() => setScreen('dashboard')} /> : null}
           {screen === 'results' && lastResult ? (
             <ResultsScreen
               onDashboard={() => setScreen('dashboard')}
               onRetry={() => setScreen('game')}
+              onSettings={() => setScreen('settings')}
               result={lastResult}
               student={student}
             />
